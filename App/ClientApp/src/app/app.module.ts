@@ -9,11 +9,10 @@ import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
 import { HomeComponent } from './components/home/home.component';
 import { CounterComponent } from './components/counter/counter.component';
 import { FetchDataComponent } from './services/fetch-data/fetch-data.component';
-import { StoreModule } from '@ngrx/store';
-import { reducers, metaReducers } from './store/reducers';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { environment } from '../environments/environment';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { RootStoreModule } from './root-store/root-store.module';
 
 @NgModule({
   declarations: [
@@ -32,7 +31,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
     ]),
-    StoreModule.forRoot(reducers),
+    RootStoreModule,
     BrowserAnimationsModule,
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
   ],
