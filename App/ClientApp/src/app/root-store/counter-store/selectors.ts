@@ -6,5 +6,5 @@ export const selectCounterState = createFeatureSelector<RootState, number>(count
 
 export const selectFeatureCount = createSelector(
   selectCounterState,
-  (state: number) => state
+  (state: number) => state,
 );

@@ -1,10 +1,9 @@
-import { NgModule } from '@angular/core';
+
 import { CommonModule } from '@angular/common';
-import { CounterStoreModule } from './counter-store/counter-store.module';
-import { AuthStoreModule } from './auth-store/auth-store.module';
+import { NgModule } from '@angular/core';
 import { StoreModule } from '@ngrx/store';
-
-
+import { AuthStoreModule } from './auth-store/auth-store.module';
+import { CounterStoreModule } from './counter-store/counter-store.module';
 
 @NgModule({
   declarations: [],
@@ -13,6 +12,7 @@ import { StoreModule } from '@ngrx/store';
     CounterStoreModule,
     AuthStoreModule,
     StoreModule.forRoot({}),
-  ]
+  ],
 })
+
 export class RootStoreModule { }

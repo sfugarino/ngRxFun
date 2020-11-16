@@ -1,8 +1,8 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { authFeatureName } from './state';
-import { authReducer } from './reducer';
+import { NgModule } from '@angular/core';
 import { StoreModule } from '@ngrx/store';
+import { authReducer } from './reducer';
+import { authFeatureName } from './state';
 
 @NgModule({
   declarations: [],

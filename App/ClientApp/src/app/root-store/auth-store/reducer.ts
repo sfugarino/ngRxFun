@@ -1,21 +1,31 @@
-import { createReducer, on } from '@ngrx/store';
-import { AuthState } from 'src/app/store/reducers/auth.reducer';
+import { Action, createReducer, on } from '@ngrx/store';
 import * as authActions from './actions';
+import { AuthState } from './state';
 
 export const initialAuthState: AuthState = {
-    profile: null,
-    isLoggedIn: false
-}
+  isLoggedIn: false,
+  profile: null,
+};
 
-const _counterReducer = createReducer(initialAuthState,
-    on(authActions.checkAuth, state => state),
-    on(authActions.checkAuthComplete, state => state),
-    on(authActions.login, state => state),
-    on(authActions.loginComplete, state => state),
-    on(authActions.logout, state => state),
-    on(authActions.logoutComplete, state => state)
+const authReducerInternal = createReducer(
+  initialAuthState,
+
+  on(authActions.loginComplete, (state, { profile, isLoggedIn }) => {
+    return {
+      ...state,
+      profile,
+      isLoggedIn,
+    };
+  }),
+  on(authActions.logout, (state, {}) => {
+    return {
+      ...state,
+      profile: null,
+      isLoggedIn: false,
+    };
+  })
 );
 
-export function authReducer(state, action) {
-    return _counterReducer(state, action);
+export function authReducer(state: AuthState | undefined, action: Action): AuthState {
+  return authReducerInternal(state, action);
 }
