@@ -16,7 +16,7 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
 
 import { RootStoreModule } from './root-store/root-store.module';
 
-export const configureAuth = (oidcConfigService: OidcConfigService): () => Promise<any> {
+export function configureAuth(oidcConfigService: OidcConfigService): any {
   return () =>
     oidcConfigService.withConfig({
       stsServer: 'https://sts.amazonaws.com',
