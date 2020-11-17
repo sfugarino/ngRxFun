@@ -40,12 +40,12 @@
             </a>
           </li>
           <li [routerLinkActive]='["link-active"]'>
-            <a class="nav-link text-dark" *ngIf="!(isLoggedIn$ | async)" [routerLink]="['#']" (click)="login()">
+            <a class="nav-link text-dark" *ngIf="!(isLoggedIn$ | async)" (click)="login()">
                 <span class='glyphicon glyphicon-log-in'></span>Login
             </a>
           </li>
           <li [routerLinkActive]='["link-active"]'>
-              <a class="nav-link text-dark" *ngIf="isLoggedIn$ | async"  [routerLink]="['#']" (click)="logout()">
+              <a class="nav-link text-dark" *ngIf="isLoggedIn$ | async"  (click)="logout()">
                   <span class='glyphicon glyphicon-log-out'></span>Logout
               </a>
           </li>   

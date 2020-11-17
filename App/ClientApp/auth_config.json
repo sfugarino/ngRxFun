@@ -1,7 +1,7 @@
 {
-    "domain": "{DOMAIN}",
-    "clientId": "{CLIENT_ID}",
+    "domain": "fugnet.us.auth0.com",
+    "clientId": "t8qR4uZI1WtAMxOewP0iBluV8njWtLvl",
     "audience": "{API_IDENTIFIER}",
-    "apiUri": "http://localhost:3001",
-    "appUri": "http://localhost:4200"
+    "apiUri": "https://localhost:4200/api",
+    "appUri": "https://localhost:4200"
   }

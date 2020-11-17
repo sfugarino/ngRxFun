@@ -48,7 +48,11 @@ import { environment as env } from '../environments/environment';
     }),
   ],
   providers: [
-
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthHttpInterceptor,
+      multi: true,
+    },
   ],
   bootstrap: [AppComponent]
 })
