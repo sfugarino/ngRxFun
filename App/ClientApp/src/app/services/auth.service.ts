@@ -1,32 +1,32 @@
 import { Injectable } from '@angular/core';
-import { OidcSecurityService } from 'angular-auth-oidc-client';
 import { Observable, of } from 'rxjs';
+import { AuthService as Auth0Service } from '@auth0/auth0-angular';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  constructor(private oidcSecurityService: OidcSecurityService) {}
+  constructor(private authService: Auth0Service) {}
 
   get isLoggedIn(): Observable<boolean> {
-    return this.oidcSecurityService.isAuthenticated$;
+    return this.authService.isAuthenticated$;
   }
 
-  get token(): string {
-    return this.oidcSecurityService.getToken();
+  get token(): Observable<string> {
+    return this.authService.getAccessTokenSilently();
   }
 
   get userData(): Observable<any> {
-    return this.oidcSecurityService.userData$;
+    return this.authService.user$;
   }
 
   public checkAuth(): Observable<boolean> {
-    return this.oidcSecurityService.checkAuth();
+    return this.authService.isAuthenticated$;
   }
 
   public doLogin(): Observable<void> {
-    return of(this.oidcSecurityService.authorize());
+    return this.authService.loginWithRedirect();
   }
 
   public signOut(): void {
-    this.oidcSecurityService.logoffAndRevokeTokens();
+    this.authService.logout();
   }
 }

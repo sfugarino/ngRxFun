@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { AuthState } from 'src/app/root-store/auth-store/state';
 import { AuthService } from '@auth0/auth0-angular';
-import { DOCUMENT } from '@angular/common';
+import { login, logout } from '../../root-store/auth-store/actions';
 
 @Component({
   selector: 'app-nav-menu',
@@ -15,7 +15,7 @@ export class NavMenuComponent {
   isExpanded = false;
   isLoggedIn$: Observable<boolean>;
 
-  constructor(public auth: AuthService, private store: Store<{ auth: AuthState }>, @Inject(DOCUMENT) private doc: Document) {
+  constructor(private store: Store<{ auth: AuthState }>) {
     this.isLoggedIn$ = store.pipe(select('auth'), select(a => a.isLoggedIn));
   }
 
@@ -28,10 +28,10 @@ export class NavMenuComponent {
   }
 
   login(): void {
-    this.auth.loginWithRedirect();
+    this.store.dispatch(login());
   }
 
   logout(): void {
-    this.auth.logout({ returnTo: this.doc.location.origin });
+    this.store.dispatch(logout());
   }
 }

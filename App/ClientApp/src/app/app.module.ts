@@ -16,6 +16,8 @@ import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
 import { RootStoreModule } from './root-store/root-store.module';
 import { AuthHttpInterceptor, AuthModule } from '@auth0/auth0-angular';
 import { environment as env } from '../environments/environment';
+import { EffectsModule } from '@ngrx/effects';
+import { AuthEffects } from './root-store/auth-store/effects';
 
 @NgModule({
   declarations: [
@@ -40,19 +42,24 @@ import { environment as env } from '../environments/environment';
     RootStoreModule,
     BrowserAnimationsModule,
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
-    AuthModule.forRoot({
-      ...env.auth,
+    /*AuthModule.forRoot({
+      ...env.auth, 
       httpInterceptor: {
         ...env.httpInterceptor,
       },
+    }),*/
+    AuthModule.forRoot({
+      domain: 'fugnet.us.auth0.com',
+      clientId: 't8qR4uZI1WtAMxOewP0iBluV8njWtLvl'
     }),
+    EffectsModule.forRoot([AuthEffects])
   ],
   providers: [
-    {
+   /* {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthHttpInterceptor,
       multi: true,
-    },
+    },*/
   ],
   bootstrap: [AppComponent]
 })
