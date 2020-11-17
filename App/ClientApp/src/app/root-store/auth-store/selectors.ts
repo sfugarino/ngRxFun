@@ -1,10 +1,15 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { State as RootState } from '../root-state';
-import { authFeatureName } from './state';
+import { authFeatureName, AuthState } from './state';
 
-export const selectCounterState = createFeatureSelector<RootState, number>(authFeatureName);
+export const selectAuthState = createFeatureSelector<RootState, AuthState>(authFeatureName);
 
-export const selectFeatureCount = createSelector(
-  selectCounterState,
-  (state: number) => state,
+export const selectFeatureAuth = createSelector(
+  selectAuthState,
+  (state: AuthState) => state,
+);
+
+export const selectIsLoggedIn = createSelector(
+  selectAuthState,
+  (state: AuthState) => state.isLoggedIn,
 );

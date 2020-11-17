@@ -5,30 +5,17 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { AuthModule, OidcConfigService } from 'angular-auth-oidc-client';
 import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
 import { CounterComponent } from './components/counter/counter.component';
+import { DashboardModule } from './components/dashboard/dashboard.module';
 import { FetchDataComponent } from './components/fetch-data/fetch-data.component';
 import { HomeComponent } from './components/home/home.component';
+import { LoginModule } from './components/login/login.module';
 import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
-import { AuthInterceptor } from './interceptors/auth.interceptor';
-
 import { RootStoreModule } from './root-store/root-store.module';
-
-export function configureAuth(oidcConfigService: OidcConfigService): any {
-  return () =>
-    oidcConfigService.withConfig({
-      stsServer: 'https://sts.amazonaws.com',
-      redirectUrl: window.location.origin,
-      postLogoutRedirectUri: window.location.origin,
-      clientId: 'Sam',
-      scope: 'openid profile email offline_access',
-      responseType: 'code',
-      silentRenew: true,
-      useRefreshToken: true,
-    });
-};
+import { AuthHttpInterceptor, AuthModule } from '@auth0/auth0-angular';
+import { environment as env } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -36,7 +23,7 @@ export function configureAuth(oidcConfigService: OidcConfigService): any {
     NavMenuComponent,
     HomeComponent,
     CounterComponent,
-    FetchDataComponent
+    FetchDataComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -48,23 +35,20 @@ export function configureAuth(oidcConfigService: OidcConfigService): any {
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
     ]),
+    DashboardModule,
+    LoginModule,
     RootStoreModule,
     BrowserAnimationsModule,
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
+    AuthModule.forRoot({
+      ...env.auth,
+      httpInterceptor: {
+        ...env.httpInterceptor,
+      },
+    }),
   ],
   providers: [
-    OidcConfigService,
-    {
-      provide: APP_INITIALIZER,
-      useFactory: configureAuth,
-      deps: [OidcConfigService],
-      multi: true,
-    },
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: AuthInterceptor,
-      multi: true,
-    },
+
   ],
   bootstrap: [AppComponent]
 })
